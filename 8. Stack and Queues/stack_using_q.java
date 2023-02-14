@@ -1,5 +1,5 @@
 // Implement a Stack using two queues q1 and q2.
-import java.util.Queue;
+import java.util.*;
 
 public class stack_using_q {
     class Queues {
