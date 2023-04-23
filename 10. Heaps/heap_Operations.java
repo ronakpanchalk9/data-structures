@@ -26,39 +26,29 @@ public class heap_Operations {
         // next minimum value at first index.
         int extractMin() {
             int min = -1;
-            if(heap_size > 0){
-                min = harr[0];
-                harr[0] = harr[heap_size-1];
-                MinHeapify(0);
+            if (this.heap_size > 0) {
+                min = this.harr[0];
+                this.harr[0] = this.harr[--heap_size];
+                this.MinHeapify(0);
             }
             return min;
         }
 
         // Function to insert a value in Heap.
         void insertKey(int k) {
-            harr[this.heap_size] = k;
-            int x = this.heap_size - 1;
-            int par = parent(x);
-
-            while (harr[x] < harr[par]) {
-                int temp = harr[x];
-                harr[x] = harr[par];
-                harr[par] = temp;
-            }
+            if (this.heap_size == this.capacity)
+                return;
+            this.decreaseKey(this.heap_size, k);
+            this.heap_size++;
 
         }
 
         // Function to delete a key at ith index.
         void deleteKey(int i) {
-            int temp = harr[i];
-            harr[i] = harr[heap_size-1];
-            harr[heap_size-1] = temp;
-
-            harr[heap_size-1] = -1;
-
-            heap_size--;
-
-            MinHeapify(i);
+            if (this.heap_size <= 0 || this.heap_size <= i)
+                return;
+            this.decreaseKey(i, Integer.MIN_VALUE);
+            this.extractMin();
         }
 
         // Function to change value at ith index and store that value at first index.
@@ -71,7 +61,7 @@ public class heap_Operations {
                 i = parent(i);
             }
         }
- 
+
         /*
          * You may call below MinHeapify function in
          * above codes. Please do not delete this code
