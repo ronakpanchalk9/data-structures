@@ -8,32 +8,37 @@ class Node {
 }
 
 public class postFromInAndPre {
-    static Node buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd,
-            Map<Integer, Integer> inMap) {
-        if (preStart > preEnd || inStart > inEnd)
+    static int findPos(int[] inorder, int element, int n) {
+        for (int i = 0; i < n; i++) {
+            if (inorder[i] == element) {
+                inorder[i] = -1;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    static Node solve(int[] inorder, int[] preorder, int inorderStart, int inorderEnd, int n, int[] preIdx) {
+        if (preIdx[0] >= n || inorderStart > inorderEnd) {
             return null;
+        }
 
-        TreeNode root = new TreeNode(preorder[preStart]);
-        int inRoot = inMap.get(root.data);
-        int numsLeft = inRoot - inStart;
+        int element = preorder[preIdx[0]++];
 
-        root.left = buildTree(preorder, preStart + 1, preStart + numsLeft, inorder,
-                inStart, inRoot - 1, inMap);
-        root.right = buildTree(preorder, preStart + numsLeft + 1, preEnd, inorder,
-                inRoot + 1, inEnd, inMap);
+        Node root = new Node(element);
+
+        int root_pos = findPos(inorder, element, n);
+
+        root.left = solve(inorder, preorder, inorderStart, root_pos - 1, n, preIdx);
+
+        root.right = solve(inorder, preorder, root_pos + 1, inorderEnd, n, preIdx);
 
         return root;
     }
 
     public static Node buildTree(int[] inorder, int[] preorder, int n) {
-        Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
-
-        for (int i = 0; i < inorder.length; i++) {
-            inMap.put(inorder[i], i);
-        }
-
-        TreeNode root = buildTree(preorder, 0, preorder.length - 1, inorder, 0,
-                inorder.length - 1, inMap);
-        return root;
+        int[] preIdx = new int[1];
+        preIdx[0] = 0;
+        return solve(inorder, preorder, 0, n - 1, n, preIdx);
     }
 }
