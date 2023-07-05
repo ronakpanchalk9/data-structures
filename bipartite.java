@@ -1,0 +1,36 @@
+
+// Bipartite - No two adjacent nodes have same color, we'll use DFS for this
+import java.util.*;
+
+public class bipartite {
+    static boolean dfs(int node, int colorFill, int[] color, ArrayList<ArrayList<Integer>> adj) {
+        color[node] = colorFill;
+        for (int i = 0; i < adj.get(node).size(); i++) {
+            if (color[adj.get(node).get(i)] == -1) {
+                if (dfs(adj.get(node).get(i), 1 - colorFill, color, adj) == false) {
+                    return false;
+                }
+            } else if (color[adj.get(node).get(i)] == colorFill) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] color = new int[V];
+
+        for (int i = 0; i < color.length; i++) {
+            color[i] = -1;
+        }
+
+        for (int i = 0; i < color.length; i++) {
+            if (color[i] == -1) {
+                if (dfs(i, 0, color, adj) == false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
