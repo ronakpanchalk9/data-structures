@@ -16,7 +16,7 @@ public class directedGraph {
     }
 
     private boolean dfs(int[] visited, int[] path, int src, ArrayList<ArrayList<Integer>> adj) {
-        // its like a trail, keep on adding 1 on the path by following a path with directed graph till you reach the end case where the node is not pointing towards any other node. Once reached there with the help of recursion we keep deleting our trail by entering 0 in path[], if any time you see any node visited and also your trail in the path[] it means it's a cycle
+        // its like a trail, keep on adding 1 on the path by following a path with directed graph till you reach the end case where the node is not pointing towards any other node. Once reached there with the help of recursion we keep deleting our trail by entering 0 in path[] , if any time you see any node visited and also your trail in the path[] it means it's a cycle
         visited[src] = 1;
         path[src] = 1;
 
