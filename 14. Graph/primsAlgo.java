@@ -16,6 +16,7 @@ public class primsAlgo {
 
         for (int i = 0; i < edges.length; i++) {
             adj.get(edges[i][0]).add(new Pair(edges[i][1], edges[i][2]));
+            adj.get(edges[i][1]).add(new Pair(edges[i][0], edges[i][2]));
         }
 
         int vis[] = new int[V];
